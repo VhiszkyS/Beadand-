@@ -1,6 +1,6 @@
 ﻿namespace Beadandó
 {
-    public interface IloanService
+    public interface ILoanService
     {
         void Add(Loan loan);
 

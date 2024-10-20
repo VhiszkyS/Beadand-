@@ -1,6 +1,6 @@
 ﻿namespace Beadandó
 {
-    public class LoanService
+    public class LoanService : ILoanService
     {
         private List<Loan> _loanList;
 

@@ -2,7 +2,7 @@
 
 namespace Beadandó
 {
-    public class ReaderService
+    public class ReaderService : IReaderService
     {
         private List<Reader> _readerList;
 

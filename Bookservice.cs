@@ -2,7 +2,7 @@
 
 namespace Beadandó
 {
-    public class Bookservice : IBookService
+    public class BookService : IBookService
     {
         private List<Book> _bookList;
         public void Add(Book book)
