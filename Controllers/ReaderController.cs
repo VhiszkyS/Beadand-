@@ -57,6 +57,12 @@ namespace Beadandó.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public ActionResult<List<Reader>> Get()
+        {
+            return Ok(_readerService.GetAll());
+        }
+
         [HttpPut("{id:guid}")]
         public IActionResult Update(Guid id, [FromBody] Reader newReader)
         {

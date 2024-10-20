@@ -6,9 +6,9 @@ namespace Beadandó.Controllers
     [Route("loans")]
     public class LoanController : ControllerBase 
     {
-        private IloanService _loanService;
+        private ILoanService _loanService;
 
-        public LoanController (IloanService loanService) 
+        public LoanController (ILoanService loanService) 
         {
             _loanService = loanService;
         }
@@ -54,6 +54,12 @@ namespace Beadandó.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult<List<Loan>> Get()
+        {
+            return Ok(_loanService.GetAll());
         }
 
         [HttpPut("{id:guid}")]
