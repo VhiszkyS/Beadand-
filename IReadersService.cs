@@ -4,9 +4,9 @@
     {
         void Add(Reader reader);
 
-        void Delete(Guid id);
+        void Delete(Guid Id);
 
-        Reader Get(Guid id);
+        Reader Get(Guid Id);
 
         List<Reader> GetAll();
 

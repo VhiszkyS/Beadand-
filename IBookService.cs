@@ -4,9 +4,9 @@
     {
         void Add (Book book);
 
-        void Delete (Guid id);
+        void Delete (Guid Id);
 
-        Book Get (Guid id);
+        Book Get (Guid Id);
 
         List<Book> GetAll ();
 
