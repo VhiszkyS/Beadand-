@@ -10,9 +10,9 @@ namespace Beadandó
 
         public string Address { get; set; }
 
-        [Range(typeof(DateTime), "1900-01-01", "2100-12-31", ErrorMessage = "A születési dátum nem lehet kisebb mint 1900.")]
+        [Range(typeof(DateOnly), "1900-01-01", "2100-12-31", ErrorMessage = "A születési dátum nem lehet kisebb mint 1900.")]
         public DateOnly BirthDate { get; set; }
 
-
+       
     }
 }

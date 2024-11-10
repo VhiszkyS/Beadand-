@@ -12,7 +12,9 @@ namespace Beadandó
 
         public string Publisher { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "A dátum nem lehet negatív.")]
-        public DateOnly PublishDate { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "A kiadás éve nem negatív.")]
+        public int PublishDate { get; set; }
+        
+        
     }
 }

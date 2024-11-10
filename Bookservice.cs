@@ -4,7 +4,7 @@ namespace Beadandó
 {
     public class BookService : IBookService
     {
-        private List<Book> _bookList;
+        private List<Book> _bookList = new List<Book>();
         public void Add(Book book)
         {
             _bookList.Add(book);

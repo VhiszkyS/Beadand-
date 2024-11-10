@@ -2,7 +2,7 @@
 {
     public class LoanService : ILoanService
     {
-        private List<Loan> _loanList;
+        private List<Loan> _loanList = new List<Loan>();
 
         public void Add(Loan loan) 
         { 

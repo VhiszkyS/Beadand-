@@ -1,4 +1,4 @@
-using Beadandó;
+using BeadandÃ³;
 
 var builder = WebApplication.CreateBuilder(args);
 

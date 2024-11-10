@@ -4,7 +4,7 @@ namespace Beadandó
 {
     public class ReaderService : IReaderService
     {
-        private List<Reader> _readerList;
+        private List<Reader> _readerList=new List<Reader>();
 
         public void Add(Reader reader)
         {

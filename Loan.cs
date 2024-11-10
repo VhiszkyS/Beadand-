@@ -9,14 +9,14 @@ namespace Beadandó
 
         [DataType(DataType.Date)]
         [CustomValidation(typeof(LoanValidator), nameof(LoanValidator.ValidateLoanDate))]
-        public DateOnly LoanDate { get; set; }
+        public DateTime LoanDate { get; set; }
 
         [CustomValidation(typeof(LoanValidator), nameof(LoanValidator.ValidateDeadline))]
-        public DateOnly Deadline { get; set; }
+        public DateTime Deadline { get; set; }
 
         public class LoanValidator
         {
-            public ValidationResult ValidateLoanDate(DateTime loanDate, ValidationContext context)
+            public static ValidationResult ValidateLoanDate(DateTime loanDate, ValidationContext context)
             {
                 if (loanDate < DateTime.Today)
                 {
@@ -25,7 +25,7 @@ namespace Beadandó
                 return ValidationResult.Success;
             }
 
-            public ValidationResult ValidateDeadline(DateOnly deadline, ValidationContext context)
+            public static ValidationResult ValidateDeadline(DateTime deadline, ValidationContext context)
             {
                 var loan = (Loan)context.ObjectInstance;
                 if (deadline <= loan.LoanDate)
