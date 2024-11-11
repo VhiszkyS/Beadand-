@@ -15,39 +15,39 @@ namespace Beadandó.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Book book)
+        public async Task<IActionResult> Add([FromBody] Book book)
         {
-            var existingBook = _bookService.Get(book.Id);
+            var existingPerson = await _bookService.GetAsync(book.Id);
 
-            if (existingBook is not null)
+            if (existingPerson is not null)
             {
                 return Conflict();
             }
 
-            _bookService.Add(book);
+            await _bookService.AddAsync(book);
 
             return Ok();
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult Delete(Guid id)
+        public async Task <IActionResult> Delete(Guid id)
         {
-            var book = _bookService.Get(id);
+            var book = await _bookService.GetAsync(id);
 
             if (book is null)
             {
                 return NotFound();
             }
 
-            _bookService.Delete(id);
+           await _bookService.DeleteAsync(id);
 
             return Ok();
         }
 
         [HttpGet("{id:guid}")]
-        public ActionResult<Book> Get(Guid id)
+        public async Task <ActionResult<Book>> Get(Guid id)
         {
-            var book = _bookService.Get(id);
+            var book = await _bookService.GetAsync(id);
 
             if (book is null)
             {
@@ -58,27 +58,27 @@ namespace Beadandó.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Book>> Get()
+        public async Task <ActionResult<List<Book>>> Get()
         {
-            return Ok(_bookService.GetAll());
+            return Ok(await _bookService.GetAllAsync());
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult Update(Guid id, [FromBody] Book newBook)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Book newBook)
         {
             if (id != newBook.Id)
             {
                 return BadRequest();
             }
 
-            var existingBook = _bookService.Get(id);
+            var existingBook = await _bookService.GetAsync(id);
 
             if (existingBook is null)
             {
                 return NotFound();
             }
 
-            _bookService.Update(newBook);
+            await _bookService.UpdateAsync(newBook);
 
             return Ok();
         }

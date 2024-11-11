@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Beadandó
 {
     public class Loan
     {
+        [Key]
         public Guid ReaderId { get; set; }
+
         public Guid BookId { get; set; }
 
         [DataType(DataType.Date)]

@@ -14,40 +14,40 @@ namespace Beadandó.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Reader reader) 
+        public async Task <IActionResult> Add([FromBody] Reader reader) 
         {
-            var existingReader = _readerService.Get(reader.Id);
+            var existingReader = await _readerService.GetAsync(reader.Id);
 
             if (existingReader != null) 
             {
                 return Conflict();
             }
 
-            _readerService.Add(reader);
+            await _readerService.AddAsync(reader);
 
             return Ok();
 
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult Delete(Guid id) 
+        public async Task <IActionResult> Delete(Guid id) 
         {
-            var reader = _readerService.Get(id);
+            var reader = await _readerService.GetAsync(id);
 
             if (reader == null) 
             {
                 return NotFound();
             }
 
-            _readerService.Delete(id);
+           await _readerService.DeleteAsync(id);
             
             return Ok();
         }
 
         [HttpGet("{id:guid}")]
-        public IActionResult Get(Guid id) 
+        public async Task <IActionResult> Get(Guid id) 
         {
-            var reader = _readerService.Get(id);
+            var reader = await _readerService.GetAsync(id);
 
             if (reader == null) 
             {
@@ -58,27 +58,27 @@ namespace Beadandó.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Reader>> Get()
+        public async Task <ActionResult<List<Reader>>> Get()
         {
-            return Ok(_readerService.GetAll());
+            return Ok(_readerService.GetAllAsync());
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult Update(Guid id, [FromBody] Reader newReader)
+        public async Task <IActionResult> Update(Guid id, [FromBody] Reader newReader)
         {
             if (id != newReader.Id)
             {
                 return BadRequest();
             }
 
-            var existingReader = _readerService.Get(id);
+            var existingReader = await _readerService.GetAsync(id);
 
             if (existingReader is null)
             {
                 return NotFound();
             }
 
-            _readerService.Update(newReader);
+            await _readerService.UpdateAsync(newReader);
 
             return Ok();
         }

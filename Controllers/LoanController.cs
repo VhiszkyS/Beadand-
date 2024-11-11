@@ -14,39 +14,39 @@ namespace Beadandó.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Loan loan) 
+        public async Task <IActionResult> Add([FromBody] Loan loan) 
         {
-            var existingLoan = _loanService.Get(loan.BookId);
+            var existingLoan = await _loanService.GetAsync(loan.BookId);
 
             if (existingLoan != null) 
             {
                 return Conflict();
             }
 
-            _loanService.Add(loan);
+            await _loanService.AddAsync(loan);
 
             return Ok();
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult Delete(Guid id) 
+        public async Task <IActionResult> Delete(Guid id) 
         {
-            var loan = _loanService.Get(id);
+            var loan = await _loanService.GetAsync(id);
 
             if (loan == null) 
             {
                 return NotFound();
             }
 
-            _loanService.Delete(id);
+            await _loanService.DeleteAsync(id);
 
             return Ok();
         }
 
         [HttpGet("{id:guid}")]
-        public IActionResult Get(Guid id) 
+        public async Task <IActionResult> Get(Guid id) 
         {
-            var loan = _loanService.Get(id);
+            var loan = await _loanService.GetAsync(id);
 
             if (loan == null) 
             {
@@ -57,27 +57,27 @@ namespace Beadandó.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Loan>> Get()
+        public async Task <ActionResult<List<Loan>>> Get()
         {
-            return Ok(_loanService.GetAll());
+            return Ok(await _loanService.GetAllAsync());
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult Update(Guid id, [FromBody] Loan newLoan)
+        public async Task <IActionResult> Update(Guid id, [FromBody] Loan newLoan)
         {
             if (id != newLoan.BookId)
             {
                 return BadRequest();
             }
 
-            var existingLoan = _loanService.Get(id);
+            var existingLoan = await _loanService.GetAsync(id);
 
             if (existingLoan is null)
             {
                 return NotFound();
             }
 
-            _loanService.Update(newLoan);
+           await _loanService.UpdateAsync(newLoan);
 
             return Ok();
         }
