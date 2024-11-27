@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BeadandóShared;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Beadandó.Contexts;

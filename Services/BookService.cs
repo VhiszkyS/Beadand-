@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeadandóShared;
+using System;
 using Beadandó.Contexts;
 using Microsoft.EntityFrameworkCore;
 

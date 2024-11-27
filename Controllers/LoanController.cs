@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BeadandóShared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Beadandó.Controllers
 {

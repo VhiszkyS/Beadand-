@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BeadandóShared;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Beadandó.Contexts;
@@ -11,5 +12,8 @@ public class BookContext : DbContext
     }
 
     public virtual DbSet<Book> Books { get; set; }
+
+    public virtual DbSet<BookItem> Items { get; set; }
+
 
 }

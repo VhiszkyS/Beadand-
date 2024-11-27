@@ -1,4 +1,5 @@
-﻿namespace Beadandó
+﻿using BeadandóShared;
+namespace Beadandó
 {
     public interface IReaderService
     {
