@@ -1,0 +1,25 @@
+﻿@page "/book"
+@inject IBookService BookService
+@inject NavigationManager NavigationManager
+@using BeadandóShared
+@using BeadandóUI.Services
+@using BeadandóUI.Components
+
+<h3>Add book</h3>
+
+<BookForm Book="_book" OnValidSubmit="AddBookAsync" ButtonText="Add" />
+
+@code {
+
+    private Book _book = new()
+    {
+        Items = [],
+    };
+
+    private async Task AddBookAsync()
+    {
+        await BookService.AddAsync(_book);
+        NavigationManager.NavigateTo("books");
+    }
+
+}
