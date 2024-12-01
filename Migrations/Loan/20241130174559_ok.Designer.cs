@@ -3,6 +3,7 @@ using System;
 using Beadandó.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Beadandó.Migrations.Loan
 {
     [DbContext(typeof(LoanContext))]
-    partial class LoanContextModelSnapshot : ModelSnapshot
+    [Migration("20241130174559_ok")]
+    partial class ok
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -37,7 +40,7 @@ namespace Beadandó.Migrations.Loan
 
                     b.HasIndex("LoanId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("BeadandóShared.Loan", b =>

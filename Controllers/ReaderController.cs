@@ -46,22 +46,22 @@ namespace Beadandó.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task <IActionResult> Get(Guid id) 
+        public async Task <ActionResult<Reader>> Get(Guid id) 
         {
             var reader = await _readerService.GetAsync(id);
 
-            if (reader == null) 
+            if (reader is null) 
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(reader);
         }
 
         [HttpGet]
         public async Task <ActionResult<List<Reader>>> Get()
         {
-            return Ok(_readerService.GetAllAsync());
+            return Ok(await _readerService.GetAllAsync());
         }
 
         [HttpPut("{id:guid}")]

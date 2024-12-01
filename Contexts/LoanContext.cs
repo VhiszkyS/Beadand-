@@ -12,5 +12,7 @@ public class LoanContext : DbContext
     }
 
     public virtual DbSet<Loan> Loans { get; set; }
+    public virtual DbSet<Item> LoanItems { get; set; }
+
 
 }

@@ -22,16 +22,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookContext>(options =>
 {
    options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
-    
+
+});
+builder.Services.AddDbContext<ReaderContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
+
 });
 builder.Services.AddDbContext<LoanContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
+
 });
-builder.Services.AddDbContext<ReadersContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
-});
+
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IReaderService, ReaderService>();

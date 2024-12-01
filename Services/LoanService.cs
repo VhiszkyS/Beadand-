@@ -50,9 +50,8 @@ namespace Beadandó
 
         public async Task UpdateAsync(Loan newLoan)
         {
-            var existingLoan = await GetAsync(newLoan.BookId);
+            var existingLoan = await GetAsync(newLoan.Id);
 
-            existingLoan.ReaderId = newLoan.ReaderId;
             existingLoan.LoanDate = newLoan.LoanDate;
             existingLoan.Deadline = newLoan.Deadline;
             

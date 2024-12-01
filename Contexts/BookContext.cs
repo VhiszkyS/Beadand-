@@ -12,8 +12,5 @@ public class BookContext : DbContext
     }
 
     public virtual DbSet<Book> Books { get; set; }
-
-    public virtual DbSet<BookItem> Items { get; set; }
-
-
+    public virtual DbSet<Item> Items { get; set; }
 }

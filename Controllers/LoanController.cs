@@ -45,16 +45,16 @@ namespace Beadandó.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task <IActionResult> Get(Guid id) 
+        public async Task <ActionResult<Loan>> Get(Guid id) 
         {
             var loan = await _loanService.GetAsync(id);
 
-            if (loan == null) 
+            if (loan is null) 
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(loan);
         }
 
         [HttpGet]
@@ -66,7 +66,7 @@ namespace Beadandó.Controllers
         [HttpPut("{id:guid}")]
         public async Task <IActionResult> Update(Guid id, [FromBody] Loan newLoan)
         {
-            if (id != newLoan.BookId)
+            if (id != newLoan.Id)
             {
                 return BadRequest();
             }

@@ -40,7 +40,7 @@ namespace Beadandó.Controllers
                 return NotFound();
             }
 
-           await _bookService.DeleteAsync(id);
+            await _bookService.DeleteAsync(id);
 
             return Ok();
         }

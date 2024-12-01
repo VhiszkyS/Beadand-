@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Beadandó.Migrations
+namespace Beadandó.Migrations.Reader
 {
-    [DbContext(typeof(BookContext))]
-    [Migration("20241127192559_CreateItemsTable")]
-    partial class CreateItemsTable
+    [DbContext(typeof(ReaderContext))]
+    [Migration("20241130175016_ok")]
+    partial class ok
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,66 +20,61 @@ namespace Beadandó.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
-            modelBuilder.Entity("BeadandóShared.Book", b =>
+            modelBuilder.Entity("BeadandóShared.Item", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Author")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PublishDate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Publisher")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("BeadandóShared.BookItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("BookId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
+                    b.Property<Guid?>("ReaderId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("ReaderId");
 
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("BeadandóShared.BookItem", b =>
+            modelBuilder.Entity("BeadandóShared.Reader", b =>
                 {
-                    b.HasOne("BeadandóShared.Book", null)
-                        .WithMany("Items")
-                        .HasForeignKey("BookId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("BirthDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Readers");
                 });
 
-            modelBuilder.Entity("BeadandóShared.Book", b =>
+            modelBuilder.Entity("BeadandóShared.Item", b =>
+                {
+                    b.HasOne("BeadandóShared.Reader", null)
+                        .WithMany("Items")
+                        .HasForeignKey("ReaderId");
+                });
+
+            modelBuilder.Entity("BeadandóShared.Reader", b =>
                 {
                     b.Navigation("Items");
                 });

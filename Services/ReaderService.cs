@@ -7,10 +7,10 @@ namespace Beadandó
 {
     public class ReaderService : IReaderService
     {
-        private ReadersContext _context;
+        private ReaderContext _context;
         private ILogger<ReaderService> _logger;
 
-        public ReaderService(ILogger<ReaderService> logger, ReadersContext context)
+        public ReaderService(ILogger<ReaderService> logger, ReaderContext context)
         {
             _logger = logger;
             _context = context;
@@ -51,11 +51,11 @@ namespace Beadandó
 
         public async Task UpdateAsync(Reader newReader)
         {
-            var existingBook = await GetAsync(newReader.Id);
+            var existingReader = await GetAsync(newReader.Id);
 
-            existingBook.Name = newReader.Name;
-            existingBook.Address = newReader.Address;
-            existingBook.BirthDate = newReader.BirthDate;
+            existingReader.Name = newReader.Name;
+            existingReader.Address = newReader.Address;
+            existingReader.BirthDate = newReader.BirthDate;
             
             await _context.SaveChangesAsync();
         }

@@ -57,7 +57,8 @@ namespace Beadandó
             existingBook.Author = newBook.Author;
             existingBook.Publisher = newBook.Publisher;
             existingBook.PublishDate = newBook.PublishDate;
-            
+
+
 
             await _context.SaveChangesAsync();
         }

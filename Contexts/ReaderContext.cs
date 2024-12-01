@@ -4,9 +4,9 @@ using System;
 
 namespace Beadandó.Contexts;
 
-public class ReadersContext : DbContext
+public class ReaderContext : DbContext
 {
-    public ReadersContext(DbContextOptions<ReadersContext> options)
+    public ReaderContext(DbContextOptions<ReaderContext> options)
         : base(options)
     {
     }

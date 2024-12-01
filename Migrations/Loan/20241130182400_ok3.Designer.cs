@@ -3,40 +3,44 @@ using System;
 using Beadandó.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Beadandó.Migrations.Readers
+namespace Beadandó.Migrations.Loan
 {
-    [DbContext(typeof(ReadersContext))]
-    partial class ReadersContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(LoanContext))]
+    [Migration("20241130182400_ok3")]
+    partial class ok3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
-            modelBuilder.Entity("Beadandó.Reader", b =>
+            modelBuilder.Entity("BeadandóShared.Loan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(255)
+                    b.Property<Guid>("BookId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("BirthDate")
+                    b.Property<DateTime>("Deadline")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
+                    b.Property<DateTime>("LoanDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ReaderId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Readers");
+                    b.ToTable("Loans");
                 });
 #pragma warning restore 612, 618
         }
