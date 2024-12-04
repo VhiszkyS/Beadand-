@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BeadandóShared\BeadandóShared.csproj" />
+    <ProjectReference Include="Beadandó.Shared\Beadandó.Shared.csproj" />
   </ItemGroup>
 
 </Project>

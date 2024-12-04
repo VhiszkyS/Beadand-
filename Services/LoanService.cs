@@ -15,6 +15,8 @@ namespace Beadandó
             _context = context;
         }
 
+
+
         public async Task AddAsync(Loan loan)
         {
             _logger.LogInformation("Loan to add: {@Loan}", loan);
