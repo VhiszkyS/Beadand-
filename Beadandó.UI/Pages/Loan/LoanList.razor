@@ -1,0 +1,46 @@
+﻿@page "/loans"
+@inject ILoanService LoanService
+@using BeadandóShared
+@using Beadandó.UI.Services
+
+@if (_loans is not null)
+{
+    <h3>Kölcsönzések</h3>
+    <a class="btn btn-primary" href="loan/add">Hozzáadás</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Kölcsönzés dátuma</td>
+                <td>Határidő</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in _loans)
+            {
+                <tr>
+                    <td>@loan.LoanDate</td>
+                    <td>@loan.Deadline</td>
+                    <td>
+                        <a href="loans/@loan.Id">Szerkesztés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+@code {
+
+    private List<Loan> _loans;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loans = await LoanService.GetAllAsync();
+    }
+
+}

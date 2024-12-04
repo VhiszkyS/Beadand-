@@ -1,0 +1,48 @@
+﻿@page "/readers"
+@inject IReaderService ReaderService
+@using BeadandóShared
+@using Beadandó.UI.Services
+
+@if (_readers is not null)
+{
+    <h3>Olvasók</h3>
+    <a class="btn btn-primary" href="reader/add">Hozzáadás</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Név</td>
+                <td>Cím</td>
+                <td>Születési dátum</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reader in _readers)
+            {
+                <tr>
+                    <td>@reader.Name</td>
+                    <td>@reader.Address</td>
+                    <td>@reader.BirthDate</td>
+                    <td>
+                        <a href="readers/@reader.Id">Szerkesztés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+@code {
+
+    private List<Reader> _readers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _readers = await ReaderService.GetAllAsync();
+    }
+
+}
