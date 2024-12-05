@@ -9,14 +9,7 @@ namespace Beadandó.Shared
         public Guid Id { get; set; }
 
         public Guid ReaderId { get; set; }
-
-        [ForeignKey(nameof(ReaderId))]
-        public Reader Reader { get; set; }
-
         public Guid BookId { get; set; }
-
-        [ForeignKey(nameof(BookId))]
-        public Book Book { get; set; }
 
         [DataType(DataType.Date)]
         [CustomValidation(typeof(LoanValidator), nameof(LoanValidator.ValidateLoanDate))]

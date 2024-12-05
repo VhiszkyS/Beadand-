@@ -1,81 +1,161 @@
-﻿using FluentAssertions.Execution;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Beadandó;
 using Beadandó.Contexts;
 using Beadandó.Shared;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Xunit;
 
-namespace Beadandó.Tests
+public class BookServiceTests
 {
-    public sealed class BookServiceUnitTests : IAsyncDisposable
+    private readonly Mock<ILogger<BookService>> _loggerMock;
+    private readonly DbContextOptions<BookContext> _dbContextOptions;
+    private readonly BookContext _context;
+    private readonly BookService _service;
+
+    public BookServiceTests()
     {
-        private readonly BookContext _inMemoryDbContext;
+        // Mock logger
+        _loggerMock = new Mock<ILogger<BookService>>();
 
-        public BookServiceUnitTests()
+        // InMemory database setup
+        _dbContextOptions = new DbContextOptionsBuilder<BookContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
+
+        _context = new BookContext(_dbContextOptions);
+
+        // BookService instance
+        _service = new BookService(_loggerMock.Object, _context);
+    }
+
+    [Fact]
+    public async Task AddAsync_Should_Add_Book_To_Database()
+    {
+        // Arrange
+        var book = new Book
         {
-            var contextOptions = new DbContextOptionsBuilder<BookContext>()
-                .UseInMemoryDatabase("BeadandóTests")
-                .Options;
+            Id = Guid.NewGuid(),
+            Title = "Test Book",
+            Author = "Test Author",
+            Publisher = "Test Publisher",
+            PublishDate = 2022
+        };
 
-            _inMemoryDbContext = new BookContext(contextOptions);
+        // Act
+        await _service.AddAsync(book);
 
-            _inMemoryDbContext.Database.EnsureDeleted();
-            _inMemoryDbContext.Database.EnsureCreated();
+        // Assert
+        var result = await _context.Books.FindAsync(book.Id);
+        Assert.NotNull(result);
+        Assert.Equal(book.Title, result.Title);
+        Assert.Equal(book.Author, result.Author);
+    }
 
-            _inMemoryDbContext.SaveChanges();
-        }
-
-        [Fact]
-        public async Task IT_AddAsync_ContainsOnePerson()
+    [Fact]
+    public async Task DeleteAsync_Should_Remove_Book_From_Database()
+    {
+        // Arrange
+        var book = new Book
         {
-            // Arrange
-            var bookService = new BookService(NullLogger<BookService>.Instance, _inMemoryDbContext);
+            Id = Guid.NewGuid(),
+            Title = "Delete Test Book",
+            Author = "Delete Test Author",
+            Publisher = "Delete Test Publisher",
+            PublishDate = 2020
+        };
 
-            await bookService.AddAsync(new Book
-            {
-                Title = "IT",
-                Author = "Stephen King",
-                Publisher = "Líra",
-                PublishDate = 1958,
-                Items = [],
-            });
+        _context.Books.Add(book);
+        await _context.SaveChangesAsync();
 
-            // Act
-            var books = await bookService.GetAllAsync();
+        // Act
+        await _service.DeleteAsync(book.Id);
 
-            // Assert
-            Assert.Single(books);
-        }
+        // Assert
+        var result = await _context.Books.FindAsync(book.Id);
+        Assert.Null(result);
+    }
 
-        [Fact]
-        public async Task LordOfTheRings_AddAsync_ContainsOneBook()
+    [Fact]
+    public async Task GetAsync_Should_Return_Book_If_Exists()
+    {
+        // Arrange
+        var book = new Book
         {
-            // Arrange
-            var bookService = new BookService(NullLogger<BookService>.Instance, _inMemoryDbContext);
+            Id = Guid.NewGuid(),
+            Title = "Existing Book",
+            Author = "Existing Author",
+            Publisher = "Existing Publisher",
+            PublishDate = 2018
+        };
 
-            await bookService.AddAsync(new Book
-            {
-                Title = "Lord of the Rings",
-                Author = "Tolkien",
-                Publisher = "Könyvmoly",
-                PublishDate = 1940,
-                Items = [],
-            });
+        _context.Books.Add(book);
+        await _context.SaveChangesAsync();
 
-            // Act
-            var books = await bookService.GetAllAsync();
+        // Act
+        var result = await _service.GetAsync(book.Id);
 
-            // Assert
-            Assert.Single(books);
-        }
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(book.Id, result.Id);
+        Assert.Equal(book.Title, result.Title);
+    }
 
-        public async ValueTask DisposeAsync()
+    [Fact]
+    public async Task GetAllAsync_Should_Return_All_Books()
+    {
+        // Arrange
+        var book1 = new Book { Id = Guid.NewGuid(), Title = "Book 1", Author = "Author 1", Publisher = "Publisher 1", PublishDate =  2010 };
+        var book2 = new Book { Id = Guid.NewGuid(), Title = "Book 2", Author = "Author 2", Publisher = "Publisher 2", PublishDate = 2015 };
+
+        _context.Books.AddRange(book1, book2);
+        await _context.SaveChangesAsync();
+
+        // Act
+        var result = await _service.GetAllAsync();
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Update_Book_Details()
+    {
+        // Arrange
+        var book = new Book
         {
-            await _inMemoryDbContext.DisposeAsync();
-        }
+            Id = Guid.NewGuid(),
+            Title = "Original Title",
+            Author = "Original Author",
+            Publisher = "Original Publisher",
+            PublishDate = 2000
+        };
+
+        _context.Books.Add(book);
+        await _context.SaveChangesAsync();
+
+        var updatedBook = new Book
+        {
+            Id = book.Id,
+            Title = "Updated Title",
+            Author = "Updated Author",
+            Publisher = "Updated Publisher",
+            PublishDate = 2022
+        };
+
+        // Act
+        await _service.UpdateAsync(updatedBook);
+
+        // Assert
+        var result = await _context.Books.FindAsync(book.Id);
+        Assert.NotNull(result);
+        Assert.Equal(updatedBook.Title, result.Title);
+        Assert.Equal(updatedBook.Author, result.Author);
+        Assert.Equal(updatedBook.PublishDate, result.PublishDate);
     }
 }
+
