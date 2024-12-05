@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BeadandóS.hared
+namespace Beadandó.Shared
 {
     public class Book
     {

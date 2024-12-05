@@ -1,4 +1,4 @@
-﻿using BeadandóShared;
+﻿using Beadandó.Shared;
 namespace Beadandó
 {
     public interface ILoanService

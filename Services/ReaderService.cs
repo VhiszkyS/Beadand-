@@ -1,4 +1,4 @@
-﻿using BeadandóShared;
+﻿using Beadandó.Shared;
 using Beadandó.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;

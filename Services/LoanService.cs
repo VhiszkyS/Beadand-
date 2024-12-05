@@ -1,4 +1,4 @@
-﻿using BeadandóShared;
+﻿using Beadandó.Shared;
 using Beadandó.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,8 +46,12 @@ namespace Beadandó
 
         public async Task<List<Loan>> GetAllAsync()
         {
-            _logger.LogInformation("All loans retrieved");
-            return await _context.Loans.ToListAsync();
+            /*_logger.LogInformation("All loans retrieved");
+            return await _context.Loans.ToListAsync();*/
+            return await _context.Loans
+            .Include(l => l.Reader)
+            .Include(l => l.Book)
+            .ToListAsync();
         }
 
         public async Task UpdateAsync(Loan newLoan)
