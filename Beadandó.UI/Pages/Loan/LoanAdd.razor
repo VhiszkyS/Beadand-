@@ -1,0 +1,25 @@
+﻿@page "/loan/add"
+@inject ILoanService LoanService
+@inject NavigationManager NavigationManager
+@using Beadandó.Shared
+@using Beadandó.UI.Services
+@using Beadandó.UI.Components
+
+<h3>Kölcsönzés hozzáadása</h3>
+
+<LoanForm Loan="_loan" OnValidSubmit="AddLoanAsync" ButtonText="Hozzáadás" />
+
+@code {
+
+    private Loan _loan = new()
+        {
+            Items = [],
+        };
+
+    private async Task AddLoanAsync()
+    {
+        await LoanService.AddAsync(_loan);
+        NavigationManager.NavigateTo("loans");
+    }
+
+}

@@ -1,0 +1,61 @@
+﻿@page "/readers/{id:guid}"
+@using Beadandó.Shared
+@using Beadandó.UI.Services
+@using Beadandó.UI.Components
+@inject IReaderService ReaderService
+@inject NavigationManager NavigationManager
+
+@if (_reader is not null && !_errored)
+{
+    <h3>Szerkesztés</h3>
+
+    <ReaderForm Reader="_reader" OnValidSubmit="UpdateAsync" ButtonText="Frissítés" />
+
+    <button class="btn btn-danger form-control mt-3" @onclick="() => DeleteAsync()">Törlés</button>
+}
+else if (_errored)
+{
+    <div class="alert alert-danger">
+        Reader not found
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+@code {
+
+    private bool _errored = false;
+    private Reader _reader;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _reader = await ReaderService.GetAsync(Id);
+        }
+        catch (Exception)
+        {
+            _errored = true;
+        }
+    }
+
+    private async Task DeleteAsync()
+    {
+        await ReaderService.DeleteAsync(Id);
+        NavigationManager.NavigateTo("readers");
+    }
+
+    private async Task UpdateAsync()
+    {
+        await ReaderService.UpdateAsync(_reader);
+        NavigationManager.NavigateTo("readers");
+    }
+
+}
+

@@ -1,0 +1,51 @@
+﻿﻿@using Beadandó.Shared
+<EditForm Model="Loan" OnValidSubmit="() => OnValidSubmit()">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label class="form-label">Olvasó azonosítója</label>
+        <InputText @bind-Value="ReaderIdAsString" class="form-control" />
+        <ValidationMessage For="() => Loan.ReaderId" />
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Kölcsönzés dátuma</label>
+        <InputDate @bind-Value="Loan.LoanDate" class="form-control" />
+        <ValidationMessage For="() => Loan.LoanDate" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Határidő</label>
+        <InputDate @bind-Value="Loan.Deadline" class="form-control" />
+        <ValidationMessage For="() => Loan.Deadline" />
+    </div>
+
+
+    <button class="btn btn-primary form-control" type="submit">@ButtonText</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public Loan Loan { get; set; }
+
+    private string ReaderIdAsString
+    {
+        get => Loan.ReaderId.ToString(); // Guid átalakítása stringgé
+        set
+        {
+            if (Guid.TryParse(value, out Guid parsedGuid)) // Guid validáció
+            {
+                Loan.ReaderId = parsedGuid;
+            }
+        }
+    }
+
+
+    [Parameter]
+    public Func<Task> OnValidSubmit { get; set; }
+
+    [Parameter]
+    public string ButtonText { get; set; }
+
+}

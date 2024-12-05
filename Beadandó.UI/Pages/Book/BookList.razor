@@ -1,0 +1,50 @@
+﻿@page "/books"
+@inject IBookService BookService
+@using Beadandó.Shared
+@using Beadandó.UI.Services
+
+@if (_books is not null)
+{
+    <h3>Könyvek</h3>
+    <a class="btn btn-primary" href="book/add">Hozzáadás</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Cím</td>
+                <td>Szerző</td>
+                <td>Kiadó</td>
+                <td>Kiadás éve</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in _books)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Publisher</td>
+                    <td>@book.PublishDate</td>
+                    <td>
+                        <a href="books/@book.Id">Szerkesztés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+@code {
+
+    private List<Book> _books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _books = await BookService.GetAllAsync();
+    }
+
+}
