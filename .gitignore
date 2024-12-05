@@ -2,3 +2,8 @@
 /bin/Debug/net8.0
 /obj
 /Beadandó.Shared/obj
+/Beadandó.Tests/obj/Debug/net8.0
+/Beadandó.Tests/obj
+/Beadandó.Tests/bin/Debug/net8.0/runtimes
+/Beadandó.Tests/bin/Debug/net8.0
+/Beadandó.Shared/bin/Debug/net8.0
